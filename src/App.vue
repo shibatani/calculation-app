@@ -1,36 +1,34 @@
 <template>
   <div id="app">
-    <Calc 
-      :title="message" 
-      @result-event="appAction" 
+    <CalcForm 
+      @result="appAction" 
     />
     <hr />
     <div>
-      <table v-html="log"></table>
+      <table v-html="dataLog"></table>
     </div>
   </div>
 </template>
 
 
 <script>
-import Calc from "./components/CalcForm.vue";
+import CalcForm from "./components/CalcForm.vue";
 
 export default {
   name: "app",
   components: {
-    Calc,
+    CalcForm,
   },
   data: function () {
     return {
-      message: "CALC",
       result: [],
     };
   },
   computed: {
-    log: function () {
-      var table =
+    dataLog: function () {
+      let table =
         '<tr><th class="head">Expression</th><th class="head">Value</th></tr>';
-      for (var i in this.result) {
+      for (const i in this.result) {
         table +=
           "<tr><td>" +
           this.result[i][0] +
@@ -42,8 +40,8 @@ export default {
     },
   },
   created: function () {
-    var items = localStorage.getItem("log");
-    var logs = JSON.parse(items);
+    const items = localStorage.getItem("log");
+    const logs = JSON.parse(items);
     if (logs != null) {
       this.result = logs;
     }
@@ -54,7 +52,7 @@ export default {
       if (this.result.length > 10) {
         this.result.pop();
       }
-      var log = JSON.stringify(this.result);
+      const log = JSON.stringify(this.result);
       localStorage.setItem("log", log);
     },
   },
